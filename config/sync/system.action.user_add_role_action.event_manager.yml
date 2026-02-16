@@ -1,0 +1,14 @@
+uuid: 1b4591b7-cbd5-4b20-8b3a-4a76c3961119
+langcode: en
+status: true
+dependencies:
+  config:
+    - user.role.event_manager
+  module:
+    - user
+id: user_add_role_action.event_manager
+label: 'Add the Event Manager role to the selected user(s)'
+type: user
+plugin: user_add_role_action
+configuration:
+  rid: event_manager

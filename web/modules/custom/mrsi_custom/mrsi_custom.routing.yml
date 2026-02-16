@@ -1,0 +1,24 @@
+mrsi_custom.welcome:
+  path: '/mrsi/welcome'
+  defaults:
+    _controller: '\Drupal\mrsi_custom\Controller\WelcomeController::welcome'
+
+    _title: 'Welcome to MRSI'
+  requirements:
+    _permission: 'access content'
+
+mrsi_custom.event_registration:
+  path: '/mrsi/register'
+  defaults:
+    _form: '\Drupal\mrsi_custom\Form\EventRegistrationForm'
+    _title: 'Event Registration'
+  requirements:
+    _permission: 'access event registrations'
+
+mrsi_custom.event_list:
+  path: '/mrsi/event-list'
+  defaults:
+    _controller: '\Drupal\mrsi_custom\Controller\EventListController::list'
+    _title: 'Event Registrations'
+  requirements:
+    _permission: 'access event registrations'

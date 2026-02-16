@@ -1,0 +1,33 @@
+.event-registration-wrapper {
+  padding: 40px;
+}
+
+.event-registration-summary {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+.event-registration-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #ffffff;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.event-registration-table th {
+  background-color: #0d6efd;
+  color: #ffffff;
+  padding: 12px;
+  text-align: left;
+}
+
+.event-registration-table td {
+  padding: 12px;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.event-registration-table tr:hover {
+  background-color: #f8f9fa;
+}

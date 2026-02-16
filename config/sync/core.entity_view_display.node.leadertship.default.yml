@@ -1,0 +1,48 @@
+uuid: 104fd92d-7e63-40de-b5f5-5d68312fdc3b
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.leadertship.field_bio
+    - field.field.node.leadertship.field_designation
+    - field.field.node.leadertship.field_photo
+    - node.type.leadertship
+  module:
+    - image
+    - user
+id: node.leadertship.default
+targetEntityType: node
+bundle: leadertship
+mode: default
+content:
+  field_bio:
+    type: basic_string
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 2
+    region: content
+  field_designation:
+    type: basic_string
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 1
+    region: content
+  field_photo:
+    type: image
+    label: above
+    settings:
+      image_link: ''
+      image_style: ''
+      image_loading:
+        attribute: lazy
+    third_party_settings: {  }
+    weight: 0
+    region: content
+  links:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 3
+    region: content
+hidden: {  }

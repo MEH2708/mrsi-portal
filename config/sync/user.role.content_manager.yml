@@ -1,0 +1,21 @@
+uuid: 6f82e070-3352-4911-91cb-ec96305d09a1
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.event
+    - node.type.page
+  module:
+    - node
+id: content_manager
+label: 'Content Manager'
+weight: 4
+is_admin: false
+permissions:
+  - 'create event content'
+  - 'create page content'
+  - 'delete any event content'
+  - 'delete own event content'
+  - 'edit any event content'
+  - 'edit own event content'
+  - 'view event revisions'

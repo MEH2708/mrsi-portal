@@ -1,0 +1,5 @@
+name: MRSI Custom
+type: module
+description: Custom features for MRSI portal
+core_version_requirement: ^11
+package: Custom

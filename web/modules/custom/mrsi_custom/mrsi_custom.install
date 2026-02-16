@@ -1,0 +1,43 @@
+<?php
+
+/**
+ * Implements hook_schema().
+ */
+function mrsi_custom_schema() {
+
+  $schema['mrsi_event_registration'] = [
+    'description' => 'Stores event registration data',
+    'fields' => [
+      'id' => [
+        'type' => 'serial',
+        'not null' => TRUE,
+      ],
+      'name' => [
+        'type' => 'varchar',
+        'length' => 100,
+        'not null' => TRUE,
+      ],
+      'email' => [
+        'type' => 'varchar',
+        'length' => 100,
+        'not null' => TRUE,
+      ],
+      'organization' => [
+        'type' => 'varchar',
+        'length' => 150,
+        'not null' => FALSE,
+      ],
+      'event_id' => [
+        'type' => 'int',
+        'not null' => TRUE,
+      ],
+      'created' => [
+        'type' => 'int',
+        'not null' => TRUE,
+      ],
+    ],
+    'primary key' => ['id'],
+  ];
+
+  return $schema;
+}

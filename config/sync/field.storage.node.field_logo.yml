@@ -1,0 +1,30 @@
+uuid: 4190a916-be71-444b-8a91-d0aa37879bea
+langcode: en
+status: true
+dependencies:
+  module:
+    - file
+    - image
+    - node
+id: node.field_logo
+field_name: field_logo
+entity_type: node
+type: image
+settings:
+  target_type: file
+  display_field: false
+  display_default: true
+  uri_scheme: public
+  default_image:
+    uuid: 10948b73-db53-473a-a962-2e4dcb7a489c
+    alt: mrsi
+    title: ''
+    width: 225
+    height: 225
+module: image
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

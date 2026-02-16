@@ -1,0 +1,9 @@
+uuid: b90c2ef2-1437-4928-9088-f066bbaf1f0b
+langcode: en
+status: true
+dependencies: {  }
+name: 'Research Category'
+vid: research_category
+description: null
+weight: 0
+new_revision: false

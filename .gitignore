@@ -1,0 +1,7 @@
+/vendor/
+/web/core/
+/web/modules/contrib/
+/web/sites/*/files/
+/web/sites/*/private/
+/web/sites/*/settings.local.php
+/.ddev/.db_snapshots/

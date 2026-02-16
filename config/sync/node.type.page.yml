@@ -1,0 +1,20 @@
+uuid: 8c8c03df-eab9-4e77-a99e-5e6c80f73743
+langcode: en
+status: true
+dependencies:
+  module:
+    - menu_ui
+third_party_settings:
+  menu_ui:
+    available_menus:
+      - main
+    parent: 'main:menu_link_content:5aa72ed7-b346-4abb-82ee-821a5f1a3bfb'
+_core:
+  default_config_hash: i0snV8Wj--OkRW12UdachUiYiz3FbeMwHu_pZYfzKLc
+name: Contact
+type: page
+description: "Market Research Society of India (MRSI)\r\n\r\nHead Office: Mumbai, India  \r\nEmail: info@mrsi.co.in  \r\nPhone: +91-XXXXXXXXXX\r\n"
+help: null
+new_revision: true
+preview_mode: 1
+display_submitted: false

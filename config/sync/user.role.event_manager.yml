@@ -1,0 +1,21 @@
+uuid: 65ad10ef-a7da-40a4-96a4-d34c62328ed9
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.event
+    - node.type.page
+  module:
+    - node
+id: event_manager
+label: 'Event Manager'
+weight: 5
+is_admin: false
+permissions:
+  - 'create event content'
+  - 'create page content'
+  - 'delete any event content'
+  - 'delete own event content'
+  - 'edit any event content'
+  - 'edit own event content'
+  - 'view event revisions'
