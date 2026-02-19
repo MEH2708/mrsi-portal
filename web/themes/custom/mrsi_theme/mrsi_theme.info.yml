@@ -1,6 +1,6 @@
 name: MRSI Theme
 type: theme
-description: Custom clean theme for MRSI
+description: Custom theme for MRSI portal
 core_version_requirement: ^10 || ^11
 base theme: olivero
 
@@ -9,7 +9,8 @@ libraries:
 
 regions:
   header: Header
-  primary_menu: Primary Menu
+  primary_menu: Primary menu
+  hero: Hero
   content: Content
   sidebar: Sidebar
   footer: Footer
