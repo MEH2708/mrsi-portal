@@ -1,0 +1,23 @@
+uuid: 4028130d-c349-4592-8a44-a1b55920fa5f
+langcode: en
+status: true
+dependencies:
+  module:
+    - search
+  theme:
+    - mrsi_theme
+_core:
+  default_config_hash: _nZjxxdypO6xrOAJkCYD81v0L7wh2zbCAVO7_C-UKIc
+id: mrsi_theme_search_form_narrow
+theme: mrsi_theme
+region: content
+weight: -3
+provider: null
+plugin: search_form_block
+settings:
+  id: search_form_block
+  label: 'Search form (narrow)'
+  label_display: '0'
+  provider: search
+  page_id: null
+visibility: {  }

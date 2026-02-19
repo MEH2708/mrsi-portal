@@ -1,0 +1,29 @@
+uuid: 475a473f-5b1d-4ff4-99a2-ea0b8416e1cf
+langcode: en
+status: true
+dependencies:
+  config:
+    - views.view.spotlight_news
+  module:
+    - system
+    - views
+  theme:
+    - olivero
+id: olivero_views_block__spotlight_news_block_1
+theme: olivero
+region: content
+weight: 0
+provider: null
+plugin: 'views_block:spotlight_news-block_1'
+settings:
+  id: 'views_block:spotlight_news-block_1'
+  label: ''
+  label_display: visible
+  provider: views
+  views_label: ''
+  items_per_page: null
+visibility:
+  request_path:
+    id: request_path
+    negate: false
+    pages: /news

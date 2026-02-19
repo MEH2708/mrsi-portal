@@ -8,7 +8,7 @@ third_party_settings:
   menu_ui:
     available_menus:
       - main
-    parent: 'main:menu_link_content:5aa72ed7-b346-4abb-82ee-821a5f1a3bfb'
+    parent: 'main:'
 _core:
   default_config_hash: i0snV8Wj--OkRW12UdachUiYiz3FbeMwHu_pZYfzKLc
 name: Contact

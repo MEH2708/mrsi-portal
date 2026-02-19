@@ -1,0 +1,15 @@
+name: MRSI Theme
+type: theme
+description: Custom clean theme for MRSI
+core_version_requirement: ^10 || ^11
+base theme: olivero
+
+libraries:
+  - mrsi_theme/global-styling
+
+regions:
+  header: Header
+  primary_menu: Primary Menu
+  content: Content
+  sidebar: Sidebar
+  footer: Footer

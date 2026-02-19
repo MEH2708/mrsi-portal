@@ -1,0 +1,22 @@
+uuid: 5493afb8-d06d-4e0f-991f-c851d53ae1f9
+langcode: en
+status: true
+dependencies:
+  module:
+    - system
+  theme:
+    - mrsi_theme
+_core:
+  default_config_hash: erQSEZF2XUjNmgTl0uNRBzmg18ZGXwUcw2FhApoeuHk
+id: mrsi_theme_content
+theme: mrsi_theme
+region: primary_menu
+weight: -4
+provider: null
+plugin: system_main_block
+settings:
+  id: system_main_block
+  label: 'Main page content'
+  label_display: '0'
+  provider: system
+visibility: {  }

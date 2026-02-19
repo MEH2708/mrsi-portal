@@ -39,10 +39,12 @@ module:
   taxonomy: 0
   text: 0
   toolbar: 0
+  update: 0
   user: 0
   views_ui: 0
   views: 10
 theme:
   olivero: 0
   claro: 0
+  mrsi_theme: 0
 profile: standard

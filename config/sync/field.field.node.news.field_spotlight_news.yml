@@ -1,0 +1,21 @@
+uuid: 6b2c9f7b-9adf-4ef4-b8c4-74465d81436d
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_spotlight_news
+    - node.type.news
+id: node.news.field_spotlight_news
+field_name: field_spotlight_news
+entity_type: node
+bundle: news
+label: 'Spotlight News'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  on_label: 'On'
+  off_label: 'Off'
+field_type: boolean
