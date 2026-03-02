@@ -1,0 +1,7 @@
+name: Webform Dynamic Contact
+type: module
+description: Dynamic contact dropdown based on Proposed By selection.
+core_version_requirement: ^9 || ^10
+package: Custom
+dependencies:
+  - webform

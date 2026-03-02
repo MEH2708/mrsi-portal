@@ -1,0 +1,914 @@
+<?php
+
+use Drupal\Core\Form\FormStateInterface;
+
+/**
+ * Implements hook_form_alter().
+ */
+function webform_proposed_contact_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+
+  if ($form_id === 'webform_submission_application_for_corporate_member_add_form') {
+
+    // ---------- Proposed By ----------
+    if (!empty($form['elements']['proposed_by'])) {
+      $form['elements']['proposed_by']['#ajax'] = [
+        'callback' => 'webform_proposed_contact_update_contacts',
+        'event' => 'change',
+        'wrapper' => 'proposed-contact-wrapper',
+      ];
+    }
+
+    if (!empty($form['elements']['proposed_contact_person'])) {
+      $form['elements']['proposed_contact_person']['#prefix'] =
+        '<div id="proposed-contact-wrapper">';
+      $form['elements']['proposed_contact_person']['#suffix'] =
+        '</div>';
+    }
+
+    // ---------- Seconded By ----------
+    if (!empty($form['elements']['seconded_by'])) {
+      $form['elements']['seconded_by']['#ajax'] = [
+        'callback' => 'webform_seconded_contact_update_contacts',
+        'event' => 'change',
+        'wrapper' => 'seconded-contact-wrapper',
+      ];
+    }
+
+    if (!empty($form['elements']['seconded_contact_person'])) {
+      $form['elements']['seconded_contact_person']['#prefix'] =
+        '<div id="seconded-contact-wrapper">';
+      $form['elements']['seconded_contact_person']['#suffix'] =
+        '</div>';
+    }
+
+  }
+}
+
+/**
+ * AJAX callback for Proposed By.
+ */
+function webform_proposed_contact_update_contacts(array &$form, FormStateInterface $form_state) {
+  $selected_company = $form_state->getValue('proposed_by');
+  $contacts = webform_proposed_contact_get_contacts();
+
+  $form['elements']['proposed_contact_person']['#options'] =
+    !empty($selected_company) && isset($contacts[$selected_company])
+      ? ['' => '- Select -'] + $contacts[$selected_company]
+      : ['' => '- Select -'];
+
+  return $form['elements']['proposed_contact_person'];
+}
+
+/**
+ * AJAX callback for Seconded By.
+ */
+function webform_seconded_contact_update_contacts(array &$form, FormStateInterface $form_state) {
+  $selected_company = $form_state->getValue('seconded_by');
+  $contacts = webform_proposed_contact_get_contacts();
+
+  $form['elements']['seconded_contact_person']['#options'] =
+    !empty($selected_company) && isset($contacts[$selected_company])
+      ? ['' => '- Select -'] + $contacts[$selected_company]
+      : ['' => '- Select -'];
+
+  return $form['elements']['seconded_contact_person'];
+}
+
+/**
+ * Company → Contact mapping.
+ */
+function webform_proposed_contact_get_contacts() {
+  return [
+
+    'Aditya Birla Group' => [
+      'aditya1' => 'Ameya Sakhardande',
+      'aditya2' => 'Arpit Dharia',
+      'aditya3' => 'Milind Birje',
+      'aditya4' => 'Nazia Wagle',
+      'aditya5' => 'Pooja Khare',
+      'aditya6' => 'Pravin Patkar',
+      'aditya7' => 'Ritesh Shetty',
+      'aditya8' => 'Santosh Kumar',
+      'aditya9' => 'Sudip Mitra',
+      'aditya10' => 'Sunita Bangard',
+    ],
+    'Advent Insight Solutions' => [
+      'advent1' => 'Lalita',
+      'advent2' => 'Sudeep',
+      'advent3' => 'Vikash',
+    ],
+    'Aeon Market Research' => [
+      'aeon1' => 'Deepak Garkhel',
+      'aeon2' => 'Rajib Mondal',
+      'aeon3' => 'Sanjay Kumar',
+      'aeon4' => 'Anil Kumar Jha',
+      'aeon5' => 'Venkat Prasad',
+    ],
+    'AIMO Marketing Services LLP' => [],
+    'Amazon Seller Services' => [],
+    'Astute Analytica India Private Limited' => [],
+    'Atlas Primary India Private Limited' => [
+      'atlas1' => 'Devan Udeshi',
+      'atlas2' => 'Kajetan Leitner',
+      'atlas3' => 'Mahesh Bhatia',
+      'atlas4' => 'Roni DasGupta',
+    ],
+    'Avance Insights Pvt. Ltd.' => [
+      'avance1' => 'Manoj Kumar Jha',
+    ],
+    'AXIS My India' => [
+      'axis1' => 'Ashish Gupta',
+      'axis2' => 'Girish Upadhyay',
+      'axis3' => 'Nandan Karmakar',
+      'axis4' => 'Pradeep Gupta',
+    ],
+    'Bahwan Cybertek' => [
+      'bahwan1' => 'Navin Prasad Durgaprasad',
+    ],
+    'Bharti Airtel' => [
+      'airtel1' => 'Bani Khurrana',
+      'airtel2' => 'Deepika Aggarwal',
+      'airtel3' => 'Mandeep Malik',
+      'airtel4' => 'Niyati Singh',
+      'airtel5' => 'Subhransu Rout',
+    ],
+    'Borderless Access' => [
+      'borderless1' => 'Aditi Bhonsle',
+      'borderless2' => 'Dushyant Gupta',
+      'borderless3' => 'Pallavi Khanna',
+      'borderless4' => 'Saurabh Gupta',
+      'borderless5' => 'Sayam Jain',
+      'borderless6' => 'Vivek Negi',
+    ],
+    'Brandscapes Consultancy' => [
+      'brandscapes1' => 'Asha Ganesan Sen',
+      'brandscapes2' => 'Nirupama Kaushik',
+      'brandscapes3' => 'Parvati Mahadev',
+      'brandscapes4' => 'Pranesh Misra',
+    ],
+    'BrightEdge Technologies' => [
+      'brightedge1' => 'Rohan Deshmukh',
+    ],
+    'Broadcast Audience Research Council (BARC)' => [
+      'barc1' => 'Bavan Mathews',
+      'barc2' => 'Deepen Shah',
+      'barc3' => 'Derrick Gray',
+      'barc4' => 'Nakul Chopra',
+      'barc5' => 'Pulak Banerjee',
+    ],
+    'C MARC (INDIA) PRIVATE LIMITED' => [
+      'cmarc1' => 'Chinmoy Mitra',
+      'cmarc2' => 'Dr. Haresh Pursnani',
+      'cmarc3' => 'Jaideep Basu',
+      'cmarc4' => 'Neel Ratan Mitra',
+    ],
+    'Calibehr Business Support Services' => [
+      'calibehr1' => 'Israr Siddique',
+      'calibehr2' => 'Nishtha Malaviya',
+    ],
+    'Capgemini Invent' => [
+      'capgemini1' => 'Alok Kumar Singh',
+      'capgemini2' => 'Angirjeet Goswami',
+      'capgemini3' => 'Deepika Bhowmick',
+      'capgemini4' => 'Ekta Singh',
+      'capgemini5' => 'Madhu Thapliyal',
+      'capgemini6' => 'Poonam Prakash Shirke',
+      'capgemini7' => 'Sandeep Bhatia',
+      'capgemini8' => 'Suday Karkera',
+      'capgemini9' => 'Veveka Nand',
+      'capgemini10' => 'Vineet Kansal',
+    ],
+    'Centre for Behavioural Research, Future Factory' => [
+      'shatovisha_banerjee' => 'Shatovisha Banerjee',
+    ],
+	    'CHROME DATA ANALYTICS & MEDIA PRIVATE LIMITED' => [
+      'pankaj_krishna' => 'Pankaj Krishna',
+      'pooja_shrivastava' => 'Pooja Shrivastava',
+      'riya_maity' => 'Riya Maity',
+      'sreehari_parameshwaran' => 'Sreehari Parameshwaran',
+      'vikram_gerald' => 'Vikram Gerald',
+      'vinod_singh_negi' => 'Vinod Singh Negi',
+    ],
+    'Colgate-Palmolive India' => [
+      'arpit_jaiswal' => 'Arpit Jaiswal',
+      'chetan_kunder' => 'Chetan Kunder',
+      'nipun_kumar' => 'Nipun Kumar',
+      'roney_eapen' => 'Roney Eapen',
+      'sanket_raysad' => 'Sanket Raysad',
+      'saurobh_medda' => 'Saurobh Medda',
+    ],
+    'Consumer Market Insight Research' => [
+      'manish_mehta' => 'Manish Mehta',
+      'nitin_bhagwat' => 'Nitin Bhagwat',
+      'suresh_vinerkar' => 'Suresh Vinerkar',
+    ],
+    'Convergent View Research & Consultancy Pvt Ltd' => [
+      'meghana_akella' => 'Meghana Akella',
+      'surya_av' => 'Surya AV',
+    ],
+    'CONVOSIGHT ANALYTICS PRIVATE LIMITED' => [
+      'tarun_k_dhamija' => 'TARUN K DHAMIJA',
+    ],
+    'CORRL8 INSIGHTS PRIVATE LIMITED' => [
+      'badal_gautam' => 'BADAL GAUTAM',
+      'devang_patel' => 'DEVANG PATEL',
+      'mukunda_giri' => 'MUKUNDA GIRI',
+      'pranay_dandekar' => 'PRANAY DANDEKAR',
+    ],
+    'CVOTER NEWS SERVICES PVT LTD' => [
+      'sadhna_bhardwaj' => 'Sadhna Bhardwaj',
+      'shalinder_mahajan' => 'Shalinder Mahajan',
+      'yashwant_deshmukh' => 'Yashwant Deshmukh',
+    ],
+    'Cyber Media Research & Services Limited' => [
+      'anil_chopra' => 'Anil Chopra',
+      'harish_jadli' => 'Harish Jadli',
+      'prabhu_ram' => 'Prabhu Ram',
+      'thomas_george' => 'Thomas George',
+    ],
+    'Dabur India Corporate Office' => [
+      'aman_agarwal' => 'Aman Agarwal',
+      'gargi_ghosh' => 'Gargi Ghosh',
+      'garima_dev' => 'Garima Dev',
+      'vinay_virwani' => 'Vinay Virwani',
+    ],
+    'Datamatics Global Services' => [
+      'himanshu_manroa' => 'Himanshu Manroa',
+      'kavish_kasbekar' => 'Kavish Kasbekar',
+      'meghna_chaturvedi' => 'Meghna Chaturvedi',
+      'nelly_mascarenhas' => 'Nelly Mascarenhas',
+      'nilesh_mistry' => 'Nilesh Mistry',
+      'sandeep_arora' => 'Sandeep Arora',
+      'tanvi_moolur' => 'Tanvi Moolur',
+      'vishal_anam' => 'Vishal Anam',
+    ],
+    'Datawise Management Services India' => [
+      'k_vijay_kumar' => 'K Vijay Kumar',
+      'k_vinay_kumar' => 'K. Vinay Kumar',
+      'ranco_chakravarthy' => 'Ranco Chakravarthy',
+    ],
+    'decrypt Marketing services Pvt. Ltd' => [
+      'achala_srivatsa' => 'Achala Srivatsa',
+      'manisha_pandey' => 'Manisha Pandey',
+      'nirepinder_singh' => 'Nirepinder Singh',
+      'rana_bose' => 'Rana Bose',
+      'sanjay_pal' => 'Sanjay Pal',
+      'sayan_chatterjee' => 'Sayan Chatterjee',
+      'venkat_kukiliya' => 'Venkat Kukiliya',
+    ],
+    'Delightful Gourmet Pvt Ltd' => [
+      'shreyas_m' => 'Shreyas M',
+      'vidhi_shah' => 'Vidhi Shah',
+    ],
+    'Dr. Reddy\'s Laboratories LTD' => [
+      'abhjit_krishna' => 'Abhjit Krishna',
+      'amitabh_mishra' => 'Amitabh Mishra',
+      'anirudh_pandharkar' => 'Anirudh Pandharkar',
+    ],
+    'Dragonfly Consumer Insight LLP' => [
+      'aprajita_kalyani' => 'Aprajita Kalyani',
+      'saachi_asthna' => 'Saachi Asthna',
+    ],
+    'Drshti Strategic Research Services' => [
+      'ak_balaji_prasad' => 'A K Balaji Prasad',
+      'dinesh_d' => 'Dinesh D',
+      'priyanka_singh' => 'Priyanka Singh',
+      'shobha_prasad' => 'Shobha prasad',
+      'shrithi_shetty' => 'Shrithi Shetty',
+      'srinivasan_raman' => 'Srinivasan Raman',
+      'sunita_haloi' => 'Sunita Haloi',
+      'susan_d_souza' => 'Susan D\' Souza',
+      'vanessa_gracias' => 'Vanessa Gracias',
+    ],
+    'Dynata' => [
+      'anuj_kaul' => 'Anuj Kaul',
+      'ardhya_tiwary' => 'Ardhya Tiwary',
+      'arun_kumar' => 'Arun Kumar',
+      'hemant_deo' => 'Hemant Deo',
+      'kunal_pal' => 'Kunal Pal',
+      'ravikumar_narayanan' => 'Ravikumar Narayanan',
+      'reetu_garhwal' => 'Reetu Garhwal',
+      'richa_gulati' => 'Richa Gulati',
+      'sachin_chhabra' => 'Sachin Chhabra',
+      'siddharth_sharma' => 'Siddharth Sharma',
+      'test' => 'Test',
+      'testing' => 'testing',
+    ],
+    'Entropik Technologies Private Limited' => [
+      'jayesh_menon' => 'Jayesh Menon',
+      'krishna_prasad' => 'Krishna Prasad',
+      'lava_kumar' => 'Lava Kumar',
+      'ranjan_kumar' => 'Ranjan Kumar',
+      'rebecca_kurian' => 'Rebecca Kurian',
+      'reshma_poojary' => 'Reshma Poojary',
+    ],
+    'FEEDBACK BUSINESS INSIGHTS PRIVATE LIMITED' => [
+      'chandramouli_s' => 'Chandramouli S',
+      'chandu_bomareddi' => 'Chandu Bomareddi',
+      'ganesh_jayaraman' => 'Ganesh Jayaraman',
+      'kaarthik_swaminathan' => 'Kaarthik Swaminathan',
+      'padma_prasad' => 'Padma Prasad',
+      'prakruthi' => 'Prakruthi',
+      'rajagopalan_v' => 'Rajagopalan V',
+      'srividya_viswanathan' => 'Srividya Viswanathan',
+    ],
+    'Foresight Research & Consulting Private Ltd' => [
+      'namita_chhetri' => 'Namita Chhetri',
+    ],
+    'GfK' => [
+      'anant_jain' => 'Anant Jain',
+      'deepanjali_itkan' => 'Deepanjali Itkan',
+      'dheeraj_mukherjee' => 'Dheeraj Mukherjee',
+      'mohit_bhalla' => 'Mohit Bhalla',
+      'nikhil_mathur' => 'Nikhil Mathur',
+      'pranesh_subbarao' => 'Pranesh Subbarao',
+      'purnima_ananthanarayan' => 'Purnima Ananthanarayan',
+      'ushpreet_singh_bawa' => 'Ushpreet Singh Bawa',
+    ],
+	    'GlaxoSmithKline' => [
+      'ankit_gupta' => 'Ankit Gupta',
+      'arushi_sachdeva' => 'Arushi Sachdeva',
+      'charu_mullick' => 'Charu Mullick',
+      'prashant_aggarwal' => 'Prashant Aggarwal',
+    ],
+    'Global Survey' => [
+      'chetan_khale' => 'Chetan Khale',
+      'dipeeka_chikhale' => 'Dipeeka Chikhale',
+      'manish_hiremath' => 'Manish Hiremath',
+      'mayank_bhanushali' => 'Mayank Bhanushali',
+      'pankaj_patil' => 'Pankaj Patil',
+    ],
+    'GMO Research Private Limited' => [
+      'akul_sharma' => 'Akul Sharma',
+      'christopher_taylor' => 'Christopher Taylor',
+      'neha_bhatnagar' => 'Neha Bhatnagar',
+    ],
+    'GNOSIS  Partners' => [
+      'kaushiki_kumari' => 'Kaushiki Kumari',
+      'sandeep_kumar' => 'Sandeep Kumar',
+      'shiva_kumar' => 'Shiva Kumar',
+    ],
+    'Godfrey Phillips' => [
+      'nandlal_maurya' => 'Nandlal Maurya',
+      'puneet_luthra' => 'Puneet Luthra',
+      'ritesh_srivastava' => 'Ritesh Srivastava',
+      'sakshi_mishra' => 'Sakshi Mishra',
+    ],
+    'Godrej Consumer Products' => [
+      'disha_shah' => 'Disha Shah',
+      'jaiti_shinde' => 'Jaiti Shinde',
+      'rutali_sheth' => 'Rutali Sheth',
+      'saurin_shah' => 'Saurin Shah',
+    ],
+    'Godrej Enterprise Group (Test)' => [
+      'lancelet_mendonca' => 'Lancelet Mendonca',
+      'monica_kukreja' => 'Monica Kukreja',
+      'nitee_mitra' => 'Nitee Mitra',
+      'sujata_sanke' => 'Sujata Sanke',
+      'sumeet_bhojani' => 'Sumeet Bhojani',
+    ],
+    'Hansa Research Group' => [
+      'ashish_karnad' => 'Ashish Karnad',
+      'jiten_mehta' => 'Jiten Mehta',
+      'piyali_chatterjee' => 'Piyali Chatterjee',
+      'praveen_nijhara' => 'Praveen Nijhara',
+      'sandeep_ranade' => 'Sandeep Ranade',
+    ],
+    'Hindustan Unilever' => [
+      'chhavi_agarwal' => 'Chhavi Agarwal',
+      'ketki_sitapati' => 'Ketki Sitapati',
+      'oslando_desouza' => 'Oslando Desouza',
+      'pourush_sharma' => 'Pourush Sharma',
+      'ravi_radhakrishnan' => 'Ravi Radhakrishnan',
+      'saurabh_khosla' => 'Saurabh Khosla',
+      'shafali_arora' => 'Shafali Arora',
+    ],
+    'i3 RC Insights' => [
+      'prakul_gupta' => 'Prakul Gupta',
+      'rohit_churamani' => 'Rohit Churamani',
+    ],
+    'iMAD Research' => [
+      'amit_narula' => 'Amit Narula',
+      'manish_dev' => 'Manish Dev',
+      'shantanu_sunil_saxenaa' => 'Shantanu Sunil Saxenaa',
+    ],
+    'IMPETUS RESEARCH PVT. LTD' => [
+      'ankur_agarwal' => 'Ankur Agarwal',
+      'b_r_das' => 'B. R. Das',
+      'biju_c' => 'Biju C',
+      'bipin_kumar_singh' => 'Bipin Kumar Singh',
+      'dharmender_singh' => 'Dharmender Singh',
+      'diksha_tiwari' => 'Diksha Tiwari',
+      'itika_upadhyaya' => 'Itika Upadhyaya',
+      'r_bala_k_iyer' => 'R. Bala K Iyer',
+      'raghavendra_srivastava' => 'Raghavendra Srivastava',
+      'rahul_srivastava' => 'Rahul Srivastava',
+    ],
+    'Infogain Software Solutions Private Limited' => [
+      'ina_nanda' => 'Ina Nanda',
+      'suhale_kapoor' => 'Suhale Kapoor',
+    ],
+    'INFOLEAP MARKET RESEARCH & CONSULTANCY LLP' => [
+      'mulraj_gala' => 'mulraj gala',
+      'rahul_varma' => 'RAHUL VARMA',
+      'sachin_chaudhari' => 'SACHIN CHAUDHARI',
+    ],
+    'INNOVATE OPERATIONS INDIA PVT LTD' => [
+      'anand_agrawal' => 'Anand Agrawal',
+      'baljeet_singh' => 'Baljeet Singh',
+      'bhupander_singh_adhikari' => 'Bhupander Singh Adhikari',
+      'diveshu_mahajan' => 'Divesh Mahajan',
+      'gaurav_sharma' => 'Gaurav Sharma',
+      'kanishka_baisoya' => 'Kanishka Baisoya',
+      'maulik_chandarana' => 'Maulik Chandarana',
+      'rajesh_soni' => 'Rajesh Soni',
+      'sandeep_kumar_singh' => 'Sandeep Kumar Singh',
+      'yogesh_julka' => 'Yogesh Julka',
+    ],
+    'Insights Opinion' => [
+      'shahab_gauri' => 'Shahab Gauri',
+      'sharoz_ghauri' => 'Sharoz Ghauri',
+    ],
+    'INTAGE INDIA Private Limited' => [
+      'moumita_saha' => 'Moumita Saha',
+      'ria_sharma' => 'Ria Sharma',
+      'ryosuke_nakamura' => 'Ryosuke Nakamura',
+      'sumito_ito' => 'Sumito Ito',
+    ],
+    'Ipsos Research' => [
+      'amit_adarkar' => 'Amit Adarkar',
+      'parijat_chakraborty' => 'Parijat Chakraborty',
+      'raja_bunet' => 'Raja Bunet',
+      'rinku_patnaik' => 'Rinku Patnaik',
+      'vivek_gupta' => 'Vivek Gupta',
+    ],
+    'IQVIA Consulting & Information Services India' => [
+      'akshay_halepaty' => 'Akshay Halepaty',
+      'amit_mookim' => 'Amit Mookim',
+      'juilee_dandekar' => 'Juilee Dandekar',
+      'kasturi_ghatak' => 'Kasturi Ghatak',
+      'maithri_singh' => 'Maithri Singh',
+      'nitin_gulati' => 'Nitin Gulati',
+      'rubina_farooqui' => 'Rubina Farooqui',
+      'sonali_bhatia' => 'Sonali Bhatia',
+      'tina_khadloya' => 'Tina Khadloya',
+      'yash_pandya' => 'Yash Pandya',
+    ],
+    'ITC' => [
+      'aashish_shukla' => 'Aashish Shukla',
+      'arindam_sengupta' => 'Arindam Sengupta',
+      'sanjoy_datta' => 'Sanjoy Datta',
+      'shuvadip_banerjee' => 'Shuvadip Banerjee',
+      'vara_prasad' => 'Vara Prasad',
+    ],
+	    'John Deere India Pvt Ltd' => [
+      'dr_kedar_sadalgekar' => 'Dr. Kedar Sadalgekar',
+      'pratik_puprediwar' => 'Pratik Puprediwar',
+      'snehal_patil' => 'Snehal Patil',
+    ],
+    'Kadence International' => [
+      'aman_makkar' => 'Aman Makkar',
+      'ankit_makkar' => 'Ankit Makkar',
+      'sarvjeet_panesar' => 'Sarvjeet Panesar',
+      'tulika_sheel' => 'Tulika Sheel',
+    ],
+    'Kantar IMRB' => [
+      'amanjit_singh' => 'Amanjit Singh',
+      'deepender_rana' => 'Deepender Rana',
+      'paru_minocha' => 'Paru Minocha',
+      'preeti_reddy' => 'Preeti Reddy',
+      'soumya_mohanty' => 'Soumya Mohanty',
+    ],
+    'Kantar MB' => [
+      'muralidhar_salvateeswaran' => 'Muralidhar Salvateeswaran',
+      'nimai_swain' => 'Nimai Swain',
+      'sandeep_ranade' => 'Sandeep Ranade',
+      'soumya_mallanna' => 'Soumya Mallanna',
+      'soumya_mohanty' => 'Soumya Mohanty',
+    ],
+    'Kellogg India Private Limited' => [
+      'dhiraj_kunder' => 'Dhiraj Kunder',
+      'puja_chandna' => 'Puja Chandna',
+    ],
+    'Knowledge Excel' => [
+      'aastha_batra' => 'Aastha Batra',
+      'ashish_mathurr' => 'Ashish Mathurr',
+      'mohammad_faraz' => 'Mohammad Faraz',
+      'preeti_chawla' => 'Preeti Chawla',
+      'saurabh_aggarwal' => 'Saurabh Aggarwal',
+      'tarun_khanna' => 'Tarun Khanna',
+    ],
+    'Krea eKnowledge' => [
+      'pravin_shekar' => 'Pravin Shekar',
+      'ragavendiran_s' => 'Ragavendiran S',
+      'ramesh_kumar_v' => 'Ramesh Kumar V',
+    ],
+    'Lucid Holdings India, A Cint Group Company' => [
+      'arindam_bhattacharya' => 'Arindam Bhattacharya',
+      'capt_saif_qezilbash' => 'Capt. Saif Qezilbash',
+      'jay_shankavaram' => 'Jay Shankavaram',
+      'jyoti_haldar' => 'Jyoti Haldar',
+      'nishant_gosain' => 'Nishant Gosain',
+    ],
+    'Lumiere Business Solutions' => [
+      'deepa_soman' => 'Deepa Soman',
+      'milind_soman' => 'Milind Soman',
+      'pallavi_gadre' => 'Pallavi Gadre',
+      'smita_arora' => 'Smita Arora',
+      'sonali_salvi' => 'Sonali Salvi',
+    ],
+    'Maction Consulting' => [
+      'm_sekar' => 'M. Sekar',
+      'mahendra_chaudhary' => 'Mahendra Chaudhary',
+      'shikha_mehta' => 'Shikha Mehta',
+    ],
+    'Magic 9 Media Consumer Knowledge' => [
+      'praveen_tripathi' => 'Praveen Tripathi',
+    ],
+    'Maitra Market Research Private Limited' => [
+      'mohan_mn' => 'Mohan MN',
+      'sudhakar_reddy' => 'Sudhakar Reddy',
+      'yugandhar_reddy' => 'Yugandhar Reddy',
+    ],
+    'Malayala Manorama' => [
+      'jeslin_joseph' => 'Jeslin Joseph',
+      'manoj_jacob' => 'Manoj Jacob',
+      'ramesh_balasubramanian' => 'Ramesh Balasubramanian',
+      'tomson_j_thundathil' => 'Tomson J Thundathil',
+    ],
+    'Marico' => [
+      'jai_jethawa' => 'Jai Jethawa',
+      'kedar_kulkarni' => 'Kedar Kulkarni',
+      'mrunalini_kudtarkar' => 'Mrunalini Kudtarkar',
+      'nirali_desai' => 'Nirali Desai',
+      'seshadri_raha' => 'Seshadri Raha',
+    ],
+    'Markelytics Solutions' => [
+      'anand_p' => 'Anand P.',
+      'jasal_shah' => 'Jasal Shah',
+      'rajesh_bodke' => 'Rajesh Bodke',
+      'venkatesh_dn' => 'Venkatesh D N',
+      'vineet_kishore' => 'Vineet Kishore',
+    ],
+    'Market Vistas Consumer Insights Pvt Ltd' => [
+      'shobha_subramanian' => 'Shobha Subramanian',
+      'soniya_mahajani' => 'Soniya Mahajani',
+    ],
+    'Market Xcel Data Matrix Pvt Ltd' => [
+      'aakash_bhasin' => 'Aakash Bhasin',
+      'akash' => 'Akash',
+      'manas_gupta' => 'Manas Gupta',
+      'manish_narang' => 'Manish Narang',
+      'rahul_bhatnagar' => 'Rahul Bhatnagar',
+      'raja_vishal_oberoi' => 'Raja Vishal Oberoi',
+      'shalini_singh' => 'Shalini Singh',
+      'varun_kumar_pathak' => 'Varun Kumar Pathak',
+      'vivek_gupta' => 'Vivek Gupta',
+    ],
+    'Maruti Suzuki India' => [
+      'gaurav_khurana' => 'Gaurav Khurana',
+      'shinoj_kb' => 'Shinoj K B',
+      'tanmaya_kalra' => 'Tanmaya Kalra',
+    ],
+    'Median Research & Consulting Pvt. Ltd.' => [
+      'swati_sasmal' => 'Swati Sasmal',
+    ],
+    'Metrix Research and Analytics Pvt Ltd.' => [
+      'ejaz_hoda' => 'Ejaz Hoda',
+      'parveen_ahluwalia' => 'Parveen Ahluwalia',
+    ],
+    'MetrixLab India Research Solutions' => [
+      'abhinav_anthony' => 'Abhinav Anthony',
+      'ankan_sarkar' => 'Ankan Sarkar',
+      'devika_satam' => 'Devika Satam',
+      'dharmaraj_thaker' => 'Dharmaraj Thaker',
+      'ishita_bhatia' => 'Ishita Bhatia',
+      'kishor_sharma' => 'Kishor Sharma',
+      'ravi_radhakrishnan' => 'Ravi Radhakrishnan',
+      'swati_bansal' => 'Swati Bansal',
+      'trupti_gupta' => 'Trupti Gupta',
+      'varsha_varghese' => 'Varsha Varghese',
+    ],
+    'MMR Research Worldwide(India) Pvt. Ltd.' => [
+      'arena_wu' => 'Arena Wu',
+      'mark_sismey' => 'Mark Sismey',
+      'mihir_inamdar' => 'Mihir Inamdar',
+      'prakruti_sutaria' => 'Prakruti Sutaria',
+      'soumen_bose' => 'Soumen Bose',
+    ],
+    'Modulus Research and Analysis' => [
+      'amar_singh' => 'Amar Singh',
+      'ashutosh_ranjan' => 'Ashutosh Ranjan',
+      'debaprabho_bhattacharya' => 'Debaprabho Bhattacharya',
+      'irulappan_kannan' => 'Irulappan Kannan',
+      'nirmal_dey' => 'Nirmal Dey',
+      'poulami_ghosh' => 'Poulami Ghosh',
+      'pronab_mazumder' => 'Pronab Mazumder',
+      'sandip_bhattacharya' => 'Sandip Bhattacharya',
+      'sheetal_bhonsale' => 'Sheetal Bhonsale',
+      'tanupriya_charan' => 'Tanupriya Charan',
+    ],
+    'Mondelez India' => [
+      'arnab_bhattacharya' => 'Arnab Bhattacharya',
+      'avinash_ashar' => 'Avinash Ashar',
+      'hardhikbhai_shah' => 'Hardhikbhai Shah',
+      'kaveri_kshirsagar' => 'Kaveri Kshirsagar',
+      'krunal_shah' => 'Krunal Shah',
+      'muzammil_waghle' => 'Muzammil Waghle',
+      'rahul_marunamala' => 'Rahul Marunamala',
+      'shruthika_kanchan' => 'Shruthika Kanchan',
+      'sushma_baralay' => 'Sushma Baralay',
+      'vittesh_kalambi' => 'Vittesh Kalambi',
+    ],
+    'MORDOR INTELLIGENCE PRIVATE LIMITED' => [
+      'ashish_gautam' => 'Ashish Gautam',
+      'avinash_desamangalam' => 'Avinash Desamangalam',
+      'bharadwaj_obula_reddy' => 'Bharadwaj Obula Reddy',
+      'himanshu_vasisht' => 'Himanshu Vasisht',
+      'jayveer_v' => 'Jayveer V',
+      'kartheek_puttaparthini' => 'Kartheek Puttaparthini',
+      'phani_kumar' => 'Phani Kumar',
+      'prateeksha_rawat' => 'Prateeksha Rawat',
+      'soumya_goud' => 'Soumya Goud',
+      'vivek_sikaria' => 'Vivek Sikaria',
+    ],
+    'NEOTERIC RESEARCH SERVICES LLP' => [
+      'rohit_reddy' => 'Rohit Reddy',
+      'shailendra_rai' => 'Shailendra Rai',
+    ],
+    'Nestle India Ltd.' => [
+      'abhinav_goel' => 'Abhinav Goel',
+      'chandan_mukherji' => 'Chandan Mukherji',
+    ],
+    'Neurosensum International India Private Limited' => [
+      'rajiv_lamba' => 'Rajiv Lamba',
+      'rohit_kumar' => 'Rohit Kumar',
+    ],
+	    'New Age TechSci Research Private Limited' => [
+      'alwin_samuel' => 'Alwin Samuel',
+      'karan_chechi' => 'Karan Chechi',
+    ],
+    'Nextyn Advisory Private Limited' => [
+      'rasesh_seth' => 'Rasesh Seth',
+      'saroj_solanki' => 'Saroj Solanki',
+      'swapnil_sharma' => 'Swapnil Sharma',
+    ],
+    'Nielsen Media India Private Limited' => [
+      'hemant_kewalya' => 'Hemant Kewalya',
+    ],
+    'NielsenIQ (India) Pvt. Ltd.' => [
+      'amit_bali' => 'Amit Bali',
+      'banupriya_sudhakar' => 'Banupriya Sudhakar',
+      'diptanshu_ray' => 'Diptanshu Ray',
+      'jaishree_agrawal' => 'Jaishree Agrawal',
+      'kanaka_bhagwat' => 'Kanaka Bhagwat',
+      'prashant_kolleri' => 'Prashant Kolleri',
+      'pratik_puprediwar' => 'Pratik Puprediwar',
+      'smridhi_agarwal' => 'Smridhi Agarwal',
+      'vidya_sen' => 'Vidya Sen',
+      'visvanathan_sambasivam' => 'Visvanathan Sambasivam',
+    ],
+    'Operations Research Guild India Private Limited' => [
+      'amit_roy' => 'Amit Roy',
+      'chandramouli_guin' => 'Chandramouli Guin',
+      'sukanya_pal' => 'Sukanya Pal',
+      'tapan_bose' => 'Tapan Bose',
+    ],
+    'Ormax' => [
+      'adnan_pocketwala' => 'Adnan Pocketwala',
+      'archita_dey' => 'Archita Dey',
+      'priya_lobo' => 'Priya Lobo',
+      'priyashree_budhiraja' => 'Priyashree Budhiraja',
+      'radhesh_uchil' => 'Radhesh Uchil',
+      'savio_dsouza' => 'Savio D\'souza',
+      'sreenidhi_narayan' => 'Sreenidhi Narayan',
+      'vispy_dara_doctor' => 'Vispy Dara Doctor',
+    ],
+    'PepsiCo India Holdings Pvt. Ltd.' => [
+      'abhinandan_patil' => 'Abhinandan Patil',
+      'awaneesh_sharma' => 'Awaneesh Sharma',
+      'dipesh_masrani' => 'Dipesh Masrani',
+      'jang_singh' => 'Jang Singh',
+      'mayank_kapoor' => 'Mayank Kapoor',
+      'priyanka_surekha' => 'Priyanka Surekha',
+      'pubali_sarkar' => 'Pubali Sarkar',
+      'sidharth_kapil' => 'Sidharth Kapil',
+      'srishti_makhija' => 'Srishti Makhija',
+      'vinay_mishra' => 'Vinay Mishra',
+    ],
+    'Pernod Ricard India Pvt. Ltd.' => [
+      'shelley_sengupta' => 'Shelley Sengupta',
+    ],
+    'Plum Insights and Strategy Pvt. Ltd.' => [
+      'maanavi_tandon' => 'Maanavi Tandon',
+      'natasha_nargolkar' => 'Natasha Nargolkar',
+      'prarthana_gupta' => 'Prarthana Gupta',
+      'sneha_kapoor' => 'Sneha Kapoor',
+    ],
+    'Purple Audacity Research & Innovation' => [
+      'chanchal_das' => 'Chanchal Das',
+      'mukul_gautam' => 'Mukul Gautam',
+      'sharmila_das' => 'Sharmila Das',
+      'vivek_srivastava' => 'Vivek Srivastava',
+    ],
+    'Pvalue Analytics' => [
+      'chaitanya_razdan' => 'Chaitanya Razdan',
+      'dr_kanupriya' => 'Dr. Kanupriya',
+      'mahim_sisodiya' => 'Mahim Sisodiya',
+      'prahallad_rout' => 'Prahallad Rout',
+      'sumit_arora' => 'Sumit Arora',
+      'umesh_jha' => 'Umesh Jha',
+      'vamsi_krishna' => 'Vamsi Krishna',
+    ],
+    'Q & Q Research Insights' => [
+      'dr_megha_upadhyay' => 'Dr. Megha Upadhyay',
+      'dr_mukta_sirohi' => 'Dr. Mukta Sirohi',
+      'priyanka_mallick' => 'Priyanka Mallick',
+    ],
+    'QDegrees Services' => [
+      'cb_rajesh' => 'CB Rajesh',
+      'karan_sharma' => 'Karan Sharma',
+      'saurabh_sharma' => 'Saurabh Sharma',
+      'sushant_banga' => 'Sushant Banga',
+      'vaibhav_khandelwal' => 'Vaibhav Khandelwal',
+    ],
+    'Quantum Consumer Solutions' => [
+      'abhishek_dhulekar' => 'Abhishek Dhulekar',
+      'nihal_ajinkya' => 'Nihal Ajinkya',
+      'sharbani_samanta' => 'Sharbani Samanta',
+      'shray_agarwal' => 'Shray Agarwal',
+    ],
+    'Questlabs Analytics Private Limited (A Questionlab Inc. Company)' => [
+      'ashwani_marwah' => 'Ashwani Marwah',
+      'scott_jones' => 'Scott Jones',
+      'vikas_kumar_srivastava' => 'Vikas Kumar Srivastava',
+    ],
+    'Rakuten Insight' => [
+      'abhishek_ray' => 'Abhishek Ray',
+      'manish_batra' => 'Manish Batra',
+      'vibhor_pandey' => 'Vibhor Pandey',
+    ],
+    'RESEARCHROMA ANALYTICS PRIVATE LIMITED' => [
+      'mohan_badal_ray' => 'Mohan Badal Ray',
+      'sumukh_dalal' => 'Sumukh Dalal',
+      'vaibhav_sharma' => 'Vaibhav Sharma',
+    ],
+    'Robas Research' => [
+      'sathish_sonar_s' => 'Sathish Sonar S.',
+    ],
+    'RS SAMPLE JUNCTION LLP' => [
+      'aditya_mukerjee' => 'Aditya Mukerjee',
+      'nimesh_sharma' => 'Nimesh Sharma',
+      'pramod_kumer_singh' => 'Pramod Kumer Singh',
+      'prince_kumer' => 'Prince Kumer',
+      'rajan_sharma' => 'Rajan Sharma',
+      'rajnish_singla' => 'Rajnish Singla',
+      'sayani_deb' => 'Sayani Deb',
+      'tejinder_singh' => 'Tejinder Singh',
+    ],
+    'RSB Insights and Analytics' => [
+      'prerna_vijay' => 'Prerna Vijay',
+      'vidya_sagar' => 'Vidya Sagar',
+    ],
+    'Saint Gobain India Private Limited' => [
+      'maruti_naik' => 'Maruti Naik',
+    ],
+    'Schbang Digital' => [
+      'dhruv_rajput' => 'Dhruv Rajput',
+      'hardik_sharma' => 'Hardik Sharma',
+      'jitto_george' => 'Jitto George',
+      'khushi_shah' => 'Khushi Shah',
+      'priyam_dadia' => 'Priyam Dadia',
+      'umang_maheshwari' => 'Umang Maheshwari',
+    ],
+    'Sixth Sense Research Solutions' => [
+      'anupam_kumar' => 'Anupam Kumar',
+      'gokuljee_anandjee' => 'Gokuljee Anandjee',
+    ],
+    'Social Marketing & Development Research Associates Pvt Ltd.' => [
+      'abhishek_agrawal' => 'Abhishek Agrawal',
+      'dr_n_bhaskara_rao' => 'Dr. N. Bhaskara Rao',
+      'p_n_vasanti' => 'P. N. Vasanti',
+    ],
+    'Steve Cragg Advertising' => [
+      'amandeep_singh_nagpal' => 'Amandeep Singh Nagpal',
+      'sanjeev_singhai' => 'Sanjeev Singhai',
+    ],
+    'STP Research' => [
+      'pradeep_sharma' => 'Pradeep Sharma',
+    ],
+    'STRATEGIC MARKETING SOLUTIONS AND RESEARCH CENTRE PRIVATE LIMITED' => [
+      'aloke_roy' => 'Aloke Roy',
+      'aneesh_mitra' => 'Aneesh Mitra',
+      'anirban_mandal' => 'Anirban Mandal',
+      'dr_sanjoy_mitra' => 'Dr. Sanjoy Mitra',
+    ],
+    'STRATEGINK SOLUTIONS PRIVATE LIMITED' => [
+      'manish_sharma' => 'MANISH SHARMA',
+      'prateek_tokas' => 'PRATEEK TOKAS',
+      'santanu_ganguly' => 'SANTANU GANGULY',
+      'vinod_singh' => 'VINOD SINGH',
+    ],
+    'Takumi Research India Pvt. Ltd.' => [
+      'arjun_ramchet_yadav' => 'Arjun Ramchet Yadav',
+      'harsh_pandey' => 'Harsh Pandey',
+      'manish_kumar' => 'Manish Kumar',
+      'nasim_ahmad_ansari' => 'Nasim Ahmad Ansari',
+      'pramod_kumar' => 'Pramod Kumar',
+    ],
+    'TAM Media Research' => [
+      'lv_krishnan' => 'LV Krishnan',
+      'nitin_kamat' => 'Nitin Kamat',
+    ],
+    'Tata Consumer Products Ltd.' => [
+      'srinivas_bhattacharya' => 'Srinivas Bhattacharya',
+    ],
+    'TATA Play' => [
+      'anisha_bajaj' => 'Anisha Bajaj',
+      'ashwani_kukreja' => 'Ashwani Kukreja',
+      'minal_sheth' => 'Minal Sheth',
+      'neha_shetty' => 'Neha Shetty',
+    ],
+    'Test Vip' => [
+      'test_0' => 'Test 0',
+      'test_1' => 'Test 1',
+      'test_2' => 'Test 2',
+      'test_3' => 'Test 3',
+      'test_4' => 'Test 4',
+      'test_5' => 'Test 5',
+      'test_6' => 'Test 6',
+      'test_7' => 'Test 7',
+      'test_8' => 'Test 8',
+      'test_9' => 'Test 9',
+    ],
+    'Test Vipul' => [
+      'test_abhishek' => 'Test Abhishek',
+      'test_pratham' => 'Test Pratham',
+      'vipul' => 'Vipul',
+    ],
+    'Third Eye Integrated Services' => [
+      'girija_iyer_gangoly' => 'Girija Iyer Gangoly',
+      'jayadevan_ambat' => 'Jayadevan Ambat',
+      'nidhi_jacob' => 'Nidhi Jacob',
+      'roma_panda' => 'Roma Panda',
+      'romila_karnik' => 'Romila Karnik',
+      'sidharth_chaturvedi' => 'Sidharth Chaturvedi',
+    ],
+    'Toluna India' => [
+      'barnali_saikia' => 'Barnali Saikia',
+      'debashis_chatterjee' => 'Debashis Chatterjee',
+      'dixit_chanana' => 'Dixit Chanana',
+      'sonit_prabhakar' => 'Sonit Prabhakar',
+    ],
+    'Track Opinion Research Private Limtied' => [
+      'melissa_jain' => 'Melissa Jain',
+      'piyush_khurana' => 'Piyush Khurana',
+      'sandeep_awhad' => 'Sandeep Awhad',
+    ],
+    'Trayistats AI Technologies Private Limited' => [
+      'abhishek' => 'Abhishek',
+      'ashwani_kumar_singh' => 'Ashwani Kumar Singh',
+      'shweta_shukla' => 'Shweta Shukla',
+    ],
+    'TV Today Network Ltd' => [
+      'aditya_bansal' => 'Aditya Bansal',
+      'amit_kumar_singh' => 'Amit Kumar Singh',
+      'sachin_paliwal' => 'Sachin Paliwal',
+      'vivek_malhotra' => 'Vivek Malhotra',
+    ],
+    'Unified Collaboration Services LLP' => [
+      'darayus_mehta' => 'Darayus Mehta',
+      'rishikant_nimbark' => 'Rishikant Nimbark',
+      'shrikant_punde' => 'Shrikant Punde',
+      'shweta_jauhari' => 'Shweta Jauhari',
+    ],
+    'United Spirits' => [
+      'arvind_sainath' => 'Arvind Sainath',
+      'suvadip_saha' => 'Suvadip Saha',
+    ],
+    'Unomer Technologies' => [
+      'amit_kothidar' => 'Amit Kothidar',
+      'mayank_sharma' => 'Mayank Sharma',
+      'venugopal_b' => 'Venugopal B',
+      'vinay_bapna' => 'Vinay Bapna',
+    ],
+    'Viacom 18 Media' => [
+      'arnab_das' => 'Arnab Das',
+      'jai_vardhan_tiwari' => 'Jai Vardhan Tiwari',
+      'sachin_yasaji' => 'Sachin Yasaji',
+    ],
+    'Vidhi Techinnovation Opportunties Network P Ltd (VTION)' => [
+      'aditya_choudhary' => 'Aditya Choudhary',
+      'manoj_dawane' => 'Manoj Dawane',
+      'reshma_doshi' => 'Reshma Doshi',
+      'shailesh_varudkar' => 'Shailesh Varudkar',
+      'srividya_tn' => 'Srividya TN',
+    ],
+    'Virabh Research Solutions & Consultancy' => [
+      'basavaraj_hurakadli' => 'Basavaraj Hurakadli',
+      'ishwar_patil' => 'Ishwar Patil',
+      'lalitha_nagaral' => 'Lalitha Nagaral',
+      'sammod_wadappi' => 'Sammod Wadappi',
+    ],
+  ];
+}

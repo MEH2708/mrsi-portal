@@ -1,0 +1,28 @@
+.mrsi-submission-wrapper {
+  max-width: 900px;
+  margin: 0 auto;
+  font-family: Arial, sans-serif;
+}
+
+.mrsi-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 30px;
+}
+
+.mrsi-table th {
+  text-align: left;
+  width: 30%;
+  padding: 8px;
+  background: #f2f2f2;
+  vertical-align: top;
+}
+
+.mrsi-table td {
+  padding: 8px;
+  border-bottom: 1px solid #ddd;
+}
+
+.member-block {
+  margin-bottom: 20px;
+}

@@ -1,0 +1,216 @@
+{#
+/**
+ * Custom submission template for MRSI Membership Webform
+ */
+#}
+
+{% set submission = webform_submission %}
+{% set data = submission.getData %}
+
+<div class="mrsi-submission-wrapper">
+
+  <h1>MRSI Membership Application</h1>
+
+  {# ===============================
+     ORGANISATION DETAILS
+     =============================== #}
+
+  <h2>Organisation Details</h2>
+
+  <table class="mrsi-table">
+    <tr>
+      <th>Name of Organisation</th>
+      <td>{{ data.name_of_organisation }}</td>
+    </tr>
+
+    <tr>
+      <th>Address</th>
+      <td>
+        {{ data.mailing_address_line_1 }}<br>
+        {% if data.mailing_address_line_2 %}{{ data.mailing_address_line_2 }}<br>{% endif %}
+        {% if data.mailing_address_line_3 %}{{ data.mailing_address_line_3 }}<br>{% endif %}
+        {{ data.city }} - {{ data.pin_code }}<br>
+        {{ data.state }}
+      </td>
+    </tr>
+
+    <tr>
+      <th>Telephone / Mobile</th>
+      <td>{{ data.telephone_mobile }}</td>
+    </tr>
+
+    <tr>
+      <th>Website</th>
+      <td>
+        {% if data.website_url %}
+          <a href="{{ data.website_url }}" target="_blank">
+            {{ data.website_url }}
+          </a>
+        {% endif %}
+      </td>
+    </tr>
+
+    <tr>
+      <th>PAN</th>
+      <td>{{ data.pan }}</td>
+    </tr>
+
+    <tr>
+      <th>GST Registered?</th>
+      <td>{{ data.gst_registration }}</td>
+    </tr>
+
+    {% if data.gst_registration == 'Yes' %}
+      <tr>
+        <th>GST Number</th>
+        <td>{{ data.gst }}</td>
+      </tr>
+    {% endif %}
+  </table>
+
+
+  {# ===============================
+     COMPANY INFORMATION
+     =============================== #}
+
+  <h2>Company Information</h2>
+
+  <table class="mrsi-table">
+    <tr>
+      <th>Activity Type</th>
+      <td>{{ data.activity_type }}</td>
+    </tr>
+
+    <tr>
+      <th>Type of Company</th>
+      <td>{{ data.type_of_company }}</td>
+    </tr>
+
+    <tr>
+      <th>Total Employees (India)</th>
+      <td>{{ data.number_of_full_time_employees_in_india_total }}</td>
+    </tr>
+
+    <tr>
+      <th>Employees in Market Research</th>
+      <td>{{ data.number_of_full_time_employees_in_india_directly_engaged_in_marke }}</td>
+    </tr>
+
+    <tr>
+      <th>Turnover (FY 2024–25)</th>
+      <td>{{ data.turnover_in_inr_f_y_2024_25 }}</td>
+    </tr>
+
+    <tr>
+      <th>Experience of Directors (Years)</th>
+      <td>{{ data.experience_of_all_directors }}</td>
+    </tr>
+  </table>
+
+
+  {# ===============================
+     REPRESENTATIVE MEMBERS
+     =============================== #}
+
+  {% if data.names_of_representative_members_to_mrsi_max_4_please_nominate_on %}
+    <h2>Representative Members</h2>
+
+    {% for member in data.names_of_representative_members_to_mrsi_max_4_please_nominate_on %}
+      <div class="member-block">
+        {% if member.name %}
+          <p><strong>Name:</strong> {{ member.name }}</p>
+        {% endif %}
+
+        {% if member.designation %}
+          <p><strong>Designation:</strong> {{ member.designation }}</p>
+        {% endif %}
+
+        {% if member.email %}
+          <p><strong>Email:</strong> {{ member.email }}</p>
+        {% endif %}
+
+        {% if member.mobile %}
+          <p><strong>Mobile:</strong> {{ member.mobile }}</p>
+        {% endif %}
+
+        <hr>
+      </div>
+    {% endfor %}
+  {% endif %}
+
+
+  {# ===============================
+     MEMBERSHIP DETAILS
+     =============================== #}
+
+  <h2>Membership Details</h2>
+
+  <p>
+    <strong>Main Reason for Seeking Membership:</strong><br>
+    {{ data.what_is_your_main_reason_for_seeking_mrsi_membership_single_reas }}
+  </p>
+
+  <p>
+    <strong>Declaration:</strong><br>
+    {% if data.i_declare_that_the_information_provided_above_is_accurate_and_tr %}
+      ✔ Accepted
+    {% else %}
+      ✘ Not Accepted
+    {% endif %}
+  </p>
+
+
+  {# ===============================
+     PROPOSED & SECONDED SECTION
+     =============================== #}
+
+  <h2>Proposed & Seconded By</h2>
+
+  <table class="mrsi-table">
+    <tr>
+      <th>Proposed By</th>
+      <td>{{ data.proposed_by }}</td>
+    </tr>
+
+    <tr>
+      <th>Proposed Contact Person</th>
+      <td>{{ data.proposed_contact_person }}</td>
+    </tr>
+
+    <tr>
+      <th>Seconded By</th>
+      <td>{{ data.seconded_by }}</td>
+    </tr>
+
+    <tr>
+      <th>Seconded Contact Person</th>
+      <td>{{ data.seconded_contact_person }}</td>
+    </tr>
+  </table>
+
+
+  {# ===============================
+     FILE UPLOADS
+     =============================== #}
+
+  <h2>Uploaded Documents</h2>
+
+  <ul>
+    {% if data.logo %}
+      <li>Logo uploaded</li>
+    {% endif %}
+
+    {% if data.pan_file %}
+      <li>PAN File uploaded</li>
+    {% endif %}
+
+    {% if data.gst_file %}
+      <li>GST File uploaded</li>
+    {% endif %}
+
+    {% if data.company_certificate %}
+      <li>Company Certificate uploaded</li>
+    {% endif %}
+  </ul>
+
+</div>
